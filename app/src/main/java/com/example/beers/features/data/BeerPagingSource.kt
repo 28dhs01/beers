@@ -1,13 +1,16 @@
-package com.example.beers.features.domain
+package com.example.beers.features.data
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.beers.PAGE_LIMIT
+import com.example.beers.features.data.remote.BeerApi
+import com.example.beers.features.domain.mappers.toBeerUiModel
 import com.example.beers.features.presentation.models.BeerUiModel
+import kotlinx.coroutines.delay
 import javax.inject.Inject
 
 class BeerPagingSource @Inject constructor(
-    private val beerRepo: BeerRepo
+    private val beerApi: BeerApi
 ) : PagingSource<Int, BeerUiModel>() {
     override fun getRefreshKey(state: PagingState<Int, BeerUiModel>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
@@ -20,11 +23,13 @@ class BeerPagingSource @Inject constructor(
         try {
             // Start refresh at page 1 if undefined.
             val pageToLoad = params.key ?: 1
-            val response = beerRepo.getBeers(page = pageToLoad, limit = PAGE_LIMIT)
+            delay(2000)
+            val dtoResponse = beerApi.getBeers(page = pageToLoad, limit = PAGE_LIMIT).body()
+            val modelResponse = dtoResponse?.map { it.toBeerUiModel() }
             return LoadResult.Page(
-                data = response,
+                data = modelResponse!!,
                 prevKey = null, // Only paging forward.
-                nextKey = pageToLoad.plus(1)
+                nextKey = if(pageToLoad<=32) pageToLoad.plus(1) else null
             )
         } catch (e: Exception) {
             // Handle errors in this block and return LoadResult.Error for

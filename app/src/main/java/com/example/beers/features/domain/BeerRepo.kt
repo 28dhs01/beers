@@ -1,8 +1,9 @@
 package com.example.beers.features.domain
 
-import com.example.beers.features.data.dto.BeerDto
+import androidx.paging.PagingData
 import com.example.beers.features.presentation.models.BeerUiModel
+import kotlinx.coroutines.flow.Flow
 
 interface BeerRepo {
-    suspend fun getBeers(page:Int, limit: Int): List<BeerUiModel>
+    suspend fun getBeers(): Flow<PagingData<BeerUiModel>>
 }

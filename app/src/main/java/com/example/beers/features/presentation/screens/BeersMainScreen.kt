@@ -42,7 +42,7 @@ fun BeersMainScreen(modifier: Modifier = Modifier, state: State<BeerUiState>){
 @Composable
 fun BeerItem(item: BeerUiModel){
     Card(modifier = Modifier.padding(8.dp)) {
-        Row(modifier = Modifier.padding(8.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+        Row(modifier = Modifier.padding(8.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             Text(text = item.id.toString(), style = TextStyle(fontWeight = FontWeight.Bold))
             Text(text = item.tagLine)
         }
