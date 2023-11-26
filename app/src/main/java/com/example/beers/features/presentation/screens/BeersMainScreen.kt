@@ -30,7 +30,7 @@ fun BeersMainScreen(modifier: Modifier = Modifier, state: State<BeerUiState>){
             }
         }
         item {
-            if( beersList?.loadState?.append == LoadState.Loading ){
+            if( beersList?.loadState?.append == LoadState.Loading || beersList?.loadState?.refresh == LoadState.Loading ){
                 Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
                     CircularProgressIndicator()
                 }

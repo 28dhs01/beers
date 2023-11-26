@@ -29,7 +29,7 @@ class BeerPagingSource @Inject constructor(
             return LoadResult.Page(
                 data = modelResponse!!,
                 prevKey = null, // Only paging forward.
-                nextKey = if(pageToLoad<=32) pageToLoad.plus(1) else null
+                nextKey = if(pageToLoad<=16) pageToLoad.plus(1) else null
             )
         } catch (e: Exception) {
             // Handle errors in this block and return LoadResult.Error for
